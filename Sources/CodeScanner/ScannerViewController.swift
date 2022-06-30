@@ -221,6 +221,13 @@ extension CodeScannerView {
             if previewLayer == nil {
                 previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
             }
+            
+            // Codes would not be recognised if input is mirrored
+            if let connection = previewLayer.connection,
+               connection.isVideoMirroringSupported {
+                connection.automaticallyAdjustsVideoMirroring = false
+                connection.isVideoMirrored = false
+            }
 
             previewLayer.frame = view.layer.bounds
             previewLayer.videoGravity = .resizeAspectFill
