@@ -197,6 +197,12 @@ extension CodeScannerView {
                     self.delegate?.didFail(reason: .badOutput)
                     return
                 }
+                
+                if let connection = self.captureSession.connections.last,
+                   connection.isVideoMirroringSupported {
+                    connection.automaticallyAdjustsVideoMirroring = false
+                    connection.isVideoMirrored = false
+                }
             }
         }
 
